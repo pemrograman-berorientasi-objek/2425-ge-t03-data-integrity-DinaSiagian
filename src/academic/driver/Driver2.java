@@ -30,15 +30,23 @@ public class Driver2 {
 
             switch (data[0]) {
                 case "course-add":
-                    if (data.length == 5) {
+                if (data.length == 5) {
+                    boolean exists = courses.stream().anyMatch(c -> c.getNim().equals(data[1]));
+                    if (!exists) {
                         courses.add(new Course(data[1], data[2], data[3], data[4]));
                     }
-                    break;
-                case "student-add":
-                    if (data.length == 5) {
+                }
+                break;
+            
+            case "student-add":
+                if (data.length == 5) {
+                    boolean exists = students.stream().anyMatch(s -> s.getNim().equals(data[1]));
+                    if (!exists) {
                         students.add(new Student(data[1], data[2], data[3], data[4]));
                     }
-                    break;
+                }
+                break;
+            
                 case "enrollment-add":
                     if (data.length == 5) {
                         String courseId = data[1];
