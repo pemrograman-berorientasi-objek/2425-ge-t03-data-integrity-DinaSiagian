@@ -8,10 +8,10 @@ public class Student {
 
     private final String nim;
     private final String nama;
-    private final int angkatan;
+    private final String angkatan;
     private final String prodi;
 
-    public Student(String nim, String nama, int angkatan, String prodi) {
+    public Student(String nim, String nama, String angkatan, String prodi) {
         this.nim = nim;
         this.nama = nama;
         this.angkatan = angkatan;
@@ -24,7 +24,7 @@ public class Student {
     public String getNama() {
         return this.nama;
     }
-    public int getAngkatan() {
+    public String getAngkatan() {
         return this.angkatan;
     }
     public String getProdi() {

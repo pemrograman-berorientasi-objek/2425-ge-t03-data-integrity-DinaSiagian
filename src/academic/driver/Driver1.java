@@ -29,30 +29,19 @@ public class Driver1 {
             }
 
             String[] data = line.split("#");
-            if (data.length < 2) continue; 
 
             switch (data[0]) {
                 case "course-add":
                     if (data.length == 5) {
-                        try {
-                            int sks = Integer.parseInt(data[3].trim());
-                            courses[courseCount] = new Course(data[1], data[2], sks, data[4]);
-                            courseCount++;
-                        } catch (NumberFormatException e) {
-                            System.out.println("Error: SKS harus berupa angka.");
-                        }
+                        courses[courseCount] = new Course(data[1], data[2], data[3], data[4]);
+                        courseCount++;
                     }
                     break;
 
                     case "student-add":
                     if (data.length == 5) {
-                        try {
-                            int angkatan = Integer.parseInt(data[3].trim()); // Konversi ke int
-                            students[studentCount] = new Student(data[1].trim(), data[2].trim(), angkatan, data[4].trim());
-                            studentCount++;
-                        } catch (NumberFormatException e) {
-                            System.out.println("Error: Angkatan harus berupa angka.");
-                        }
+                        students[studentCount] = new Student(data[1], data[2], data[3], data[4]);
+                        studentCount++;
                     }
                     break;
                 
@@ -72,7 +61,7 @@ public class Driver1 {
         input.close();
 
         // Cetak semua courses
-        for (int i = 0; i < courseCount; i++) {
+        for (int i = courseCount - 1 ; i >= 0; i--) {
             System.out.println(courses[i].toString());
         }
 
