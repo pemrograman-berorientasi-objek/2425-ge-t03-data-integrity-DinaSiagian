@@ -8,10 +8,10 @@ public class Course {
 
     private final String nim;
     private final String mataKuliah;
-    private final int sks;
+    private final String sks;
     private final String grade;
 
-    public Course(String nim, String mataKuliah, int sks, String grade) {
+    public Course(String nim, String mataKuliah, String sks, String grade) {
         this.nim = nim;
         this.mataKuliah = mataKuliah;
         this.sks = sks;
@@ -24,7 +24,7 @@ public class Course {
     public String getMataKuliah() {
         return this.mataKuliah;
     }
-    public int getSks() {
+    public String getSks() {
         return this.sks;
     }
     public String getGrade() {
