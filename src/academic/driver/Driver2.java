@@ -5,8 +5,12 @@ import academic.model.Student;
 import academic.model.Enrollment;
 import java.util.Scanner;
 
+/**
+ * @author 12S23009_Dina Marlina Siagian
+ * @author 12S23028_Daniel Situmorang
+ */
 public class Driver2 {
-    public static void main(String[] args) {
+    public static void main(String[] _args) {
         Scanner input = new Scanner(System.in);
 
         Course[] courses = new Course[100];
@@ -17,117 +21,86 @@ public class Driver2 {
         int studentCount = 0;
         int enrollmentCount = 0;
 
+        StringBuilder invalidEntries = new StringBuilder();
+
         while (true) {
             String line = input.nextLine().trim();
 
             if (line.equals("---")) {
-                break; 
+                break;
             }
 
             String[] data = line.split("#");
-            if (data.length < 2) continue; 
 
             switch (data[0]) {
                 case "course-add":
                     if (data.length == 5) {
-                        // Check for duplicates
-                        boolean exists = false;
-                        for (int i = 0; i < courseCount; i++) {
-                            if (courses[i].getNim().equals(data[1])) {
-                                exists = true;
-                                break;
-                            }
-                        }
-                        if (!exists) {
-                            try {
-                                int sks = Integer.parseInt(data[3].trim());
-                                courses[courseCount] = new Course(data[1], data[2], sks, data[4]);
-                                courseCount++;
-                            } catch (NumberFormatException e) {
-                                System.out.println("Error: SKS harus berupa angka.");
-                            }
-                        }
+                        courses[courseCount] = new Course(data[1], data[2], data[3], data[4]);
+                        courseCount++;
                     }
                     break;
-
                 case "student-add":
                     if (data.length == 5) {
-                        // Check for duplicates
-                        boolean existsStudent = false;
-                        for (int i = 0; i < studentCount; i++) {
-                            if (students[i].getNim().equals(data[1])) {
-                                existsStudent = true;
-                                break;
-                            }
-                        }
-                        if (!existsStudent) {
-                            try {
-                                int angkatan = Integer.parseInt(data[3].trim());
-                                students[studentCount] = new Student(data[1].trim(), data[2].trim(), angkatan, data[4].trim());
-                                studentCount++;
-                            } catch (NumberFormatException e) {
-                                System.out.println("Error: Angkatan harus berupa angka.");
-                            }
-                        }
+                        students[studentCount] = new Student(data[1], data[2], data[3], data[4]);
+                        studentCount++;
                     }
                     break;
-
                 case "enrollment-add":
                     if (data.length == 5) {
-                        // Check if course exists first
+                        String courseId = data[1];
+                        String studentId = data[2];
+                        
                         boolean courseExists = false;
+                        boolean studentExists = false;
+                        
                         for (int i = 0; i < courseCount; i++) {
-                            if (courses[i].getNim().equals(data[1])) {
+                            if (courses[i].getNim().equals(courseId)) {
                                 courseExists = true;
                                 break;
                             }
                         }
-
-                        // If course does not exist, print error and skip further checks
-                        if (!courseExists) {
-                            System.out.println("invalid course|" + data[1]);
-                            break;
-                        }
-
-                        // Check if student exists
-                        boolean studentExists = false;
+                        
                         for (int i = 0; i < studentCount; i++) {
-                            if (students[i].getNim().equals(data[2])) {
+                            if (students[i].getNim().equals(studentId)) {
                                 studentExists = true;
                                 break;
                             }
                         }
-
-                        // If student does not exist, print error
-                        if (!studentExists) {
-                            System.out.println("invalid student|" + data[2]);
-                        } else { // If both exist, add enrollment
+                        
+                        if (!courseExists) {
+                            invalidEntries.append("invalid course|").append(courseId).append("\n");
+                        } else if (!studentExists) {
+                            invalidEntries.append("invalid student|").append(studentId).append("\n");
+                        } else {
                             enrollments[enrollmentCount] = new Enrollment(data[1], data[2], data[3], data[4]);
                             enrollmentCount++;
                         }
                     }
                     break;
-
                 default:
                     System.out.println("Error: Perintah tidak dikenali.");
             }
         }
 
         input.close();
+        System.out.print(invalidEntries.toString());
 
-        // Print all courses
-        for (int i = 0; i < courseCount; i++) {
+        // Cetak semua courses
+        for (int i = courseCount - 1; i >= 0; i--) {
             System.out.println(courses[i].toString());
         }
 
-        // Print all students
-        for (int i = 0; i < studentCount; i++) {
+        // Cetak semua students
+        for (int i = studentCount - 1;i >= 0; i--) {
             System.out.println(students[i].toString());
         }
 
-        // Print all enrollments
+        // Cetak semua enrollments
         for (int i = 0; i < enrollmentCount; i++) {
             System.out.println(enrollments[i].toString());
         }
+        
+      
+   
     }
 }
