@@ -18,7 +18,7 @@ public class Enrollment {
         this.tahunAjaran = tahunAjaran.trim();
         this.semester = semester.trim();
         this.nilai = "None";
-    }
+    } 
 
     public String getKodeMataKuliah() {
         return kodeMataKuliah;
