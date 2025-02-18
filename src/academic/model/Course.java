@@ -31,7 +31,7 @@ public class Course {
         return this.grade;
     }
 
-    @Override 
+    @Override
     public String toString() {
         return this.nim + "|" + this.mataKuliah + "|" + this.sks + "|" + this.grade;
     }

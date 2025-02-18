@@ -9,7 +9,7 @@ import java.util.Scanner;
  * @author 12S23009_Dina Marlina Siagian
  * @author 12S23028_Daniel Situmorang
  */
-public class Driver1 { 
+public class Driver1 {
     public static void main(String[] _args) {
         Scanner input = new Scanner(System.in);
 

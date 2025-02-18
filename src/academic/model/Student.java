@@ -35,4 +35,4 @@ public class Student {
     public String toString() {
         return this.nim + "|" + this.nama + "|" + this.angkatan + "|" + this.prodi;
     }
-} 
+}
