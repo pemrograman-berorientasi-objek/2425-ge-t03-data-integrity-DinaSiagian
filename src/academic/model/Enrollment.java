@@ -6,46 +6,30 @@ package academic.model;
  */
 public class Enrollment {
 
-    private final String kodeMataKuliah;
-    private final String nimMahasiswa;
+    private final String courseId;
+    private final String studentId;
     private final String tahunAjaran;
     private final String semester;
     private String nilai;
 
-    public Enrollment(String kodeMataKuliah, String nimMahasiswa, String tahunAjaran, String semester) {
-        this.kodeMataKuliah = kodeMataKuliah.trim();
-        this.nimMahasiswa = nimMahasiswa.trim();
+    public Enrollment(String courseId, String studentId, String tahunAjaran, String semester) {
+        this.courseId = courseId.trim();
+        this.studentId = studentId.trim();
         this.tahunAjaran = tahunAjaran.trim();
         this.semester = semester.trim();
         this.nilai = "None";
     }
 
-    public String getKodeMataKuliah() {
-        return kodeMataKuliah;
+    public String getCourseId() {
+        return courseId;
     }
 
-    public String getNimMahasiswa() {
-        return nimMahasiswa;
-    }
-
-    public String getTahunAjaran() {
-        return tahunAjaran;
-    }
-
-    public String getSemester() {
-        return semester;
-    }
-
-    public String getNilai() {
-        return nilai;
-    }
-
-    public void setNilai(String nilai) {
-        this.nilai = nilai.trim();
+    public String getStudentId() {
+        return studentId;
     }
 
     @Override
     public String toString() {
-        return kodeMataKuliah + "|" + nimMahasiswa + "|" + tahunAjaran + "|" + semester + "|" + nilai;
+        return courseId + "|" + studentId + "|" + tahunAjaran + "|" + semester + "|" + nilai;
     }
 }

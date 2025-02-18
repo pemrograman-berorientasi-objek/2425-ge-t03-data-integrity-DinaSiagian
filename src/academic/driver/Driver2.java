@@ -21,47 +21,49 @@ public class Driver2 {
 
         while (true) {
             String line = input.nextLine().trim();
-
             if (line.equals("---")) {
                 break;
             }
 
             String[] data = line.split("#");
+            if (data.length < 2) {
+                System.out.println("Error: Perintah tidak lengkap.");
+                continue;
+            }
 
             switch (data[0]) {
                 case "course-add":
-                if (data.length == 5) {
-                    boolean exists = courses.stream().anyMatch(c -> c.getNim().equals(data[1]));
-                    if (!exists) {
+                    if (data.length == 5) {
                         courses.add(new Course(data[1], data[2], data[3], data[4]));
+                    } else {
+                        System.out.println("Error: Format course-add salah.");
                     }
-                }
-                break;
-            
-            case "student-add":
-                if (data.length == 5) {
-                    boolean exists = students.stream().anyMatch(s -> s.getNim().equals(data[1]));
-                    if (!exists) {
+                    break;
+                case "student-add":
+                    if (data.length == 5) {
                         students.add(new Student(data[1], data[2], data[3], data[4]));
+                    } else {
+                        System.out.println("Error: Format student-add salah.");
                     }
-                }
-                break;
-            
+                    break;
                 case "enrollment-add":
                     if (data.length == 5) {
                         String courseId = data[1];
                         String studentId = data[2];
-                        
-                        boolean courseExists = courses.stream().anyMatch(c -> c.getNim().equals(courseId));
-                        boolean studentExists = students.stream().anyMatch(s -> s.getNim().equals(studentId));
-                        
-                        if (!courseExists) {
-                            invalidEntries.append("invalid course|").append(courseId).append("\n");
-                        } else if (!studentExists) {
-                            invalidEntries.append("invalid student|").append(studentId).append("\n");
+
+                        boolean courseExists = courses.stream().anyMatch(c -> c.getKodeMataKuliah().equals(courseId));
+                        boolean studentExists = students.stream().anyMatch(s -> s.getId().equals(studentId));
+
+                        if (!courseExists || !studentExists) {
+                            invalidEntries.append("invalid ");
+                            if (!courseExists) invalidEntries.append("course|").append(courseId).append(" ");
+                            if (!studentExists) invalidEntries.append("student|").append(studentId);
+                            invalidEntries.append("\n");
                         } else {
-                            enrollments.add(new Enrollment(data[1], data[2], data[3], data[4]));
+                            enrollments.add(new Enrollment(courseId, studentId, data[3], data[4]));
                         }
+                    } else {
+                        System.out.println("Error: Format enrollment-add salah.");
                     }
                     break;
                 default:
@@ -70,21 +72,17 @@ public class Driver2 {
         }
 
         input.close();
-        
-        System.out.print(invalidEntries.toString());
-        
-        courses.sort(Comparator.comparing(Course::getNim));
-        students.sort(Comparator.comparing(Student::getNim));
-        enrollments.sort(Comparator.comparing(Enrollment::getKodeMataKuliah));
-        
-        for (Course course : courses) {
-            System.out.println(course.toString());
+
+        if (invalidEntries.length() > 0) {
+            System.out.print(invalidEntries.toString());
         }
-        for (Student student : students) {
-            System.out.println(student.toString());
-        }
-        for (Enrollment enrollment : enrollments) {
-            System.out.println(enrollment.toString());
-        }
+
+        courses.sort(Comparator.comparing(Course::getKodeMataKuliah));
+        students.sort(Comparator.comparing(Student::getId));
+        enrollments.sort(Comparator.comparing(Enrollment::getCourseId));
+
+        courses.forEach(System.out::println);
+        students.forEach(System.out::println);
+        enrollments.forEach(System.out::println);
     }
 }

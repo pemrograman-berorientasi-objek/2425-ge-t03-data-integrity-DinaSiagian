@@ -3,7 +3,7 @@ package academic.driver;
 import academic.model.Course;
 import academic.model.Student;
 import academic.model.Enrollment;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * @author 12S23009_Dina Marlina Siagian
@@ -13,19 +13,15 @@ public class Driver1 {
     public static void main(String[] _args) {
         Scanner input = new Scanner(System.in);
 
-        Course[] courses = new Course[100];
-        Student[] students = new Student[100];
-        Enrollment[] enrollments = new Enrollment[100];
-
-        int courseCount = 0;
-        int studentCount = 0;
-        int enrollmentCount = 0;
+        List<Course> courses = new ArrayList<>();
+        List<Student> students = new ArrayList<>();
+        List<Enrollment> enrollments = new ArrayList<>();
 
         while (true) {
             String line = input.nextLine().trim();
 
             if (line.equals("---")) {
-                break; 
+                break;
             }
 
             String[] data = line.split("#");
@@ -33,26 +29,19 @@ public class Driver1 {
             switch (data[0]) {
                 case "course-add":
                     if (data.length == 5) {
-                        courses[courseCount] = new Course(data[1], data[2], data[3], data[4]);
-                        courseCount++;
+                        courses.add(new Course(data[1], data[2], data[3], data[4]));
                     }
                     break;
-
-                    case "student-add":
+                case "student-add":
                     if (data.length == 5) {
-                        students[studentCount] = new Student(data[1], data[2], data[3], data[4]);
-                        studentCount++;
+                        students.add(new Student(data[1], data[2], data[3], data[4]));
                     }
                     break;
-                
-
                 case "enrollment-add":
                     if (data.length == 5) {
-                        enrollments[enrollmentCount] = new Enrollment(data[1], data[2], data[3], data[4]);
-                        enrollmentCount++;
+                        enrollments.add(new Enrollment(data[1], data[2], data[3], data[4]));
                     }
                     break;
-
                 default:
                     System.out.println("Error: Perintah tidak dikenali.");
             }
@@ -60,19 +49,18 @@ public class Driver1 {
 
         input.close();
 
-        // Cetak semua courses
-        for (int i = courseCount - 1 ; i >= 0; i--) {
-            System.out.println(courses[i].toString());
-        }
+        courses.sort(Comparator.comparing(Course::getKodeMataKuliah));
+        students.sort(Comparator.comparing(Student::getId));
+        enrollments.sort(Comparator.comparing(Enrollment::getCourseId));
 
-        // Cetak semua students
-        for (int i = 0; i < studentCount; i++) {
-            System.out.println(students[i].toString());
+        for (Course course : courses) {
+            System.out.println(course.toString());
         }
-
-        // Cetak semua enrollments
-        for (int i = 0; i < enrollmentCount; i++) {
-            System.out.println(enrollments[i].toString());
+        for (Student student : students) {
+            System.out.println(student.toString());
+        }
+        for (Enrollment enrollment : enrollments) {
+            System.out.println(enrollment.toString());
         }
     }
 }
