@@ -6,24 +6,33 @@ package academic.model;
  */
 public class Course {
 
-    private final String kodeMataKuliah;
+    private final String nim;
     private final String mataKuliah;
     private final String sks;
     private final String grade;
 
-    public Course(String kodeMataKuliah, String mataKuliah, String sks, String grade) {
-        this.kodeMataKuliah = kodeMataKuliah;
+    public Course(String nim, String mataKuliah, String sks, String grade) {
+        this.nim = nim;
         this.mataKuliah = mataKuliah;
         this.sks = sks;
         this.grade = grade;
     }
 
-    public String getKodeMataKuliah() {
-        return this.kodeMataKuliah;
+    public String getNim() {
+        return this.nim;
+    }
+    public String getMataKuliah() {
+        return this.mataKuliah;
+    }
+    public String getSks() {
+        return this.sks;
+    }
+    public String getGrade() {
+        return this.grade;
     }
 
     @Override
     public String toString() {
-        return this.kodeMataKuliah + "|" + this.mataKuliah + "|" + this.sks + "|" + this.grade;
+        return this.nim + "|" + this.mataKuliah + "|" + this.sks + "|" + this.grade;
     }
 }
